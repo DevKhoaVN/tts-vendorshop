@@ -125,7 +125,6 @@ class AcessService{
 
    // chua co thi tra ra token
     const hoderToken = await KeyTokenService.findRefreshToken(refreshToken)
-    const refreshToken = refreshToken.trim()
     if(!hoderToken) throw new UnauthorizedError("Shop not registered")
 
     const {userId , email} = JWT.verify(refreshToken , hoderToken.publicKey)
