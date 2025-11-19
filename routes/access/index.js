@@ -6,10 +6,8 @@ const router = express.Router();
 
 router.post("/shop/signup" , asyncHanlder(accessController.signup))
 router.post("/shop/login" , asyncHanlder(accessController.login))
-// authenction
-router.use(authencation)
 
-router.post("/shop/logout" , asyncHanlder(accessController.logout))
-router.post("/shop/handleRefreshToken" , asyncHanlder(accessController.handleRefreshToken))
+router.post("/shop/logout" ,authencation,  asyncHanlder(accessController.logout))
+router.post("/shop/handleRefreshToken" ,authencation,  asyncHanlder(accessController.handleRefreshToken))
 
 module.exports = router
