@@ -31,8 +31,41 @@ const generatePublicPrivateKey = () => {
     return { publicKey,  privateKey };
 };
 
+const getSelectData = (select= []) => {
+    return Object.fromEntries(select.map(el => [el, 1]))
+}
+const unSelectData = (select = []) => {
+    return Object.fromEntries(select.map(el => [el, 0]))
+}
 
+const removeUndefineValueInObject = (object = {}) => {
+     Object.keys(object).forEach(k => {
+        if(object[k] == null){
+            delete object[k]
+        }
+    })
+    return object
+}
 
+const updateNestedObjectPaser = (object) => {
+    const final = {}
+    Object.keys(object).forEach(k => {
+        if(typeof(object[k]) ==='object' && !Array.isArray(object[k])){
+            const response = updateNestedObjectPaser(object[k])
+            Object.keys(response).forEach( a => {
+                final[`${k}.${a}`] = res[a]
+            })
+        }else{
+            final[k] =  object[k]
+        }
+    })
+}
 module.exports = {
-    getInforData , asyncHanlder, generatePublicPrivateKey
+    getInforData , 
+    asyncHanlder,
+    generatePublicPrivateKey,
+    getSelectData,
+    unSelectData,
+    removeUndefineValueInObject,
+    updateNestedObjectPaser
 }

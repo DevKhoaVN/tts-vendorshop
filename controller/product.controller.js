@@ -3,8 +3,21 @@ const {OK , CREATED} = require("../core/sucess.response")
 const { product } = require("../model/product.model")
 
 class ProductController{
+
+    updateProduct = async (req, res, next) => {
+           console.log("body: " , req.body)
+        new OK({
+            message: "updateProduct success",
+            metadata: await ProductService.updateProduct({
+                type: req.body.type ,
+                payload: req.body.payload ,
+                productId: req.params.productId
+            })
+        }).send(res)
+    }
+
     createProduct = async (req, res, next) => {
-        console.log("body: " , req.body)
+     
         new CREATED({
             message: "Created product success",
             metadata: await ProductService.createProduct(req.body.type ,{
@@ -57,6 +70,22 @@ class ProductController{
         new OK({
             message: `searchProducts success` ,
             metadata: await ProductService.searchProducts(req.params)
+        }).send(res)
+    }
+
+    findAllProducts = async (req, res, next) => {
+        new OK({
+            message: `findAllProducts success` ,
+            metadata: await ProductService.findAllProducts()
+        }).send(res)
+    }
+
+    findProduct = async (req, res, next) => {
+        new OK({
+            message: `findProduct success` ,
+            metadata: await ProductService.findProduct({
+                product_id: req.params.product_id
+            })
         }).send(res)
     }
 }
