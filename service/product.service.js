@@ -1,5 +1,6 @@
 const { BadRequestError, NotFoundError } = require("../core/error.response")
 const {product , electronic , clothing} = require("../model/product.model")
+const { insertInventory } = require("../model/repository/inventory.repo")
 const {findAllDraftsForShop, publishProductByShop, queryProduct, unPublishProductByShop, searchProduct, findAllProducts, findProduct} = require("../model/repository/product.repo")
 const { removeUndefineValueInObject } = require("../utils")
 
@@ -93,7 +94,17 @@ class Product{
     }
 
     async createProduct(product_id){
-        return await product.create({...this, _id: product_id})
+        const newProduct =  await product.create({...this, _id: product_id})
+        if(newProduct){
+            // add product_stock in inventory collection
+           await insertInventory({
+                productId: newProduct._id,
+                stock: this.product_quantity,
+                shopId: this.product_shop
+            })
+        }
+
+        return newProduct
     }   
 
     async updateProduct(productId, bodyUpdate){
