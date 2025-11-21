@@ -58,7 +58,7 @@ class ProductFactory{
     static async findAllProducts({limit = 3 , sort = 'ctime', page = 1, filter = {isPublihed: true}} = {}){
         console.log("linit :", limit)
         return await findAllProducts({limit, sort, page, filter, select: [
-            'product_name' , 'product_thumb', 'product_price', 'product_ratingAverage' 
+            'product_name' , 'product_thumb', 'product_price', 'product_ratingAverage', 'product_shop'
         ]})
     }
 

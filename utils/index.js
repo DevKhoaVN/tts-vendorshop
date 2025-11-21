@@ -2,8 +2,12 @@ const _ = require ("lodash")
 const crypto = require("crypto")
 const { format } = require("path")
 const JWT = require("jsonwebtoken")
+const {Types} = require('mongoose')
 
-
+const findModelExist = async ({ model, filter }) => {
+  return await model.findOne(filter)
+}
+const convertToObjectMongodb = id => Types.ObjectId(id)
 const getInforData =  ({fields = [] , object = {}}) => {
     return _.pick(object , fields)
 }
@@ -67,5 +71,7 @@ module.exports = {
     getSelectData,
     unSelectData,
     removeUndefineValueInObject,
-    updateNestedObjectPaser
+    updateNestedObjectPaser,
+    convertToObjectMongodb,
+    findModelExist
 }
