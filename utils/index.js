@@ -5,7 +5,7 @@ const JWT = require("jsonwebtoken")
 const {Types} = require('mongoose')
 
 const findModelExist = async ({ model, filter }) => {
-  return await model.findOne(filter)
+  return await model.findOne(filter).lean()
 }
 const convertToObjectMongodb = id => Types.ObjectId(id)
 const getInforData =  ({fields = [] , object = {}}) => {

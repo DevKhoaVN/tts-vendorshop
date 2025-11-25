@@ -85,6 +85,19 @@ const findProduct = async ({product_id , unSelect}) => {
 const findProductById = async (productId) => {
     return await product.findOne({_id: productId})
 }
+
+const checkProductByServer = async (products) => {
+    return await Promise.all(products.map(
+        async product => {
+            const foundProduct = await findProductById(product._id)
+            if(foundProduct) return {
+                price: foundProduct.product_price,
+                quantity: foundProduct.product_quantity,
+                productId: foundProduct.productId
+            }
+        }
+    ))
+}
 module.exports = {
     findAllDraftsForShop ,
     publishProductByShop , 
@@ -93,5 +106,6 @@ module.exports = {
     searchProduct,
     findAllProducts,
     findProduct,
-    findProductById
+    findProductById,
+    checkProductByServer
 }

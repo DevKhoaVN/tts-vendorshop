@@ -15,11 +15,11 @@ const { findModelExist } = require("../utils")
 const { product } = require("../model/product.model")
 
 class CartService {
-    static async createCart({userId , products}){
+    static async createCart({userId , product}){
         const filter = {cart_userId: userId, cart_state: 'active'},
         updateOrInsert = {
             $addToSet: {
-                cart_products: products
+                cart_products: product
             }
         }, options = {upsert: true, new: true}
 
@@ -55,7 +55,6 @@ class CartService {
          }
        },options = {upsert: true , new: true}
 
-       console.log("i hamerrrrrrrr")
        // product exist so update it
          return await cart.findOneAndUpdate(filter, updateSet, options)    
     }
